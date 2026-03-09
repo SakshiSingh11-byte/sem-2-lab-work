@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+void display(int arr[], int n)
+{
+    int i;
+    printf("Array elements are:\n");
+    for(i = 0; i < n; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+void insertAtPosition(int arr[], int *n, int pos, int value)
+{
+    int i;
+    for(i = *n; i > pos; i--)
+    {
+        arr[i] = arr[i-1];
+    }
+    arr[pos] = value;
+    (*n)++;
+}
+
+void deleteAtPosition(int arr[], int *n, int pos)
+{
+    int i;
+    for(i = pos; i < *n-1; i++)
