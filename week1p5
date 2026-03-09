@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char str1[100], str2[100], result[200];
+
+    printf("Enter first string: ");
+    fgets(str1, sizeof(str1), stdin);
+    str1[strcspn(str1, "\n")] = '\0'; 
+
+    printf("Enter second string: ");
+    fgets(str2, sizeof(str2), stdin);
+    str2[strcspn(str2, "\n")] = '\0'; 
+
+    int choice;
+    printf("\nChoose operation:\n");
+    printf("1. Addition (Concatenation)\n");
+    printf("2. Copying\n");
+    printf("3. Reverse\n");
+    printf("4. Length of String\n");
+    scanf("%d", &choice);
+
+    switch (choice) {
+        case 1: 
+            strcpy(result, str1);
+            strcat(result, str2);
+            printf("\nResult of Addition (Concatenation): %s\n", result);
+            break;
+
+        case 2:
+            strcpy(result, str1);
+            printf("\nCopy of first string: %s\n", result);
+            break;
+
+        case 3:
+            {
+                int len = strlen(str1);
+                for (int i = 0; i < len; i++) {
+                    result[i] = str1[len - i - 1];
+                }
+                result[len] = '\0';
+                printf("\nReverse of first string: %s\n", result);
+            }
+            break;
+
+        case 4: 
+            printf("\nLength of first string: %lu\n", strlen(str1));
+            printf("Length of second string: %lu\n", strlen(str2));
+            break;
+
+        default:
+            printf("Invalid choice!\n");
+    }
+
+    return 0;
+}
