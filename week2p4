@@ -1,0 +1,26 @@
+#include <stdio.h>
+struct Time {
+    int hours;
+    int minutes;
+    int seconds;};
+struct Time diff(struct Time t1, struct Time t2) {
+    struct Time res;
+    if (t1.seconds < t2.seconds) {
+        t1.minutes--;
+        t1.seconds += 60;}
+    res.seconds = t1.seconds - t2.seconds;
+    if (t1.minutes < t2.minutes) {
+        t1.hours--;
+        t1.minutes += 60; }
+    res.minutes = t1.minutes - t2.minutes;
+    res.hours = t1.hours - t2.hours;
+    return res;}
+int main() {
+    struct Time t1, t2, res;
+    printf("Enter t1 (HH:MM:SS): ");
+    scanf("%d:%d:%d", &t1.hours, &t1.minutes, &t1.seconds);
+    printf("Enter t2 (HH:MM:SS): ");
+    scanf("%d:%d:%d", &t2.hours, &t2.minutes, &t2.seconds);
+    res = diff(t1, t2);
+    printf("\nTime Difference: %02d:%02d:%02d\n", res.hours, res.minutes, res.seconds);
+    return 0;}
