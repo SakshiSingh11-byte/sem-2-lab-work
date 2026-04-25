@@ -1,61 +1,77 @@
-#include <stdio.h>
-#include <stdlib.h>
-struct node {
-    int data;
-    struct node *next;};
+#include<stdio.h>
+#include<stdlib.h>
 
-typedef struct {
-    struct node *top;
-} stack;
+struct nodetype {
+    int INFO;
+    struct nodetype *NEXT;
+};
+typedef struct nodetype node;
 
-void push(stack *sp, int item) {
-    struct node *t = (struct node*)malloc(sizeof(struct node));
-    if (t == NULL) {
-        printf("Stack overflow\n");
-        return;}
-    t->data = item;
-    t->next = sp->top;
-    sp->top = t;}
+int isempty(node *top) {
+    if (top == NULL) return 1;
+    else return 0;
+}
 
-int pop(stack *sp) {
-    struct node *t;
-    int item;
-    if (sp->top == NULL) {
-        printf("Stack empty\n");
-        return 0;}
-    t = sp->top;
-    item = t->data;
-    sp->top = t->next;
-    free(t);
-    return item;}
+node* push(node *top, int item) {
+    node *pnew = (node *)malloc(sizeof(node));
+    pnew->INFO = item;
+    pnew->NEXT = top;
+    printf("Node inserted...\n");
+    return pnew;
+}
 
-void traversal(stack st) {
-    struct node *p = st.top;
-    if (p == NULL) {
-        printf("Stack empty\n");
-        return;}
-    while (p != NULL) {
-        printf("%d ", p->data);
-        p = p->next; }
-    printf("\n");}
+node* pop(node *top) {
+    node *pdel;
+    if (isempty(top)) {
+        printf("\nStack empty - Deletion not possible\n");
+        return top;
+    }
+    pdel = top;
+    top = top->NEXT;
+    free(pdel);
+    printf("Node deleted...\n");
+    return top;
+}
+
+void traversal(node *top) {
+    if (isempty(top)) {
+        printf("\nStack empty\n");
+    } else {
+        node *p = top;
+        printf("\nContents of Stack:\nTop-> ");
+        while (p != NULL) {
+            printf("%d ", p->INFO);
+            p = p->NEXT;
+        }
+        printf("\n");
+    }
+}
 
 int main() {
+    node *top = NULL;
     int choice, item;
-    stack st;
-    st.top = NULL;
 
     while (1) {
-        printf("\n1.Push 2.Pop 3.Display 4.Exit: ");
+        printf("\n1. Push\n2. Pop\n3. Display\n4. Exit\nEnter choice: ");
         scanf("%d", &choice);
-        if (choice == 1) {
-            printf("Enter item: ");
-            scanf("%d", &item);
-            push(&st, item);
-        } else if (choice == 2) {
-            item = pop(&st);
-            if (item != 0) printf("Popped: %d\n", item);
-        } else if (choice == 3) {
-            traversal(st);
-        } else {
-            exit(0);} }
-    return 0;}
+
+        switch (choice) {
+            case 1:
+                printf("Enter value: ");
+                scanf("%d", &item);
+                top = push(top, item);
+                break;
+            case 2:
+                top = pop(top);
+                break;
+            case 3:
+                traversal(top);
+                break;
+            case 4:
+                exit(0);
+            default:
+                printf("Invalid choice!\n");
+        }
+    }
+    return 0;
+}
